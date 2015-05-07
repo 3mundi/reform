@@ -18,7 +18,11 @@ module Reform
   private
     def aliased_model
       # TODO: cache the Expose.from class!
-      Reform::Expose.from(mapper).new(:model => model)
+      @_aliased_model ||= self.class.expose_class.new(:model => model)
+    end
+
+    def self.expose_class
+      @_expose_class ||= Reform::Expose.from(representer_class)
     end
 
 
